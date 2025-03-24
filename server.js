@@ -65,6 +65,27 @@ app.get("/todos/:todoId", async(req, res)=> {
     }
 })
 
+app.patch("/:todoId", async(req, res)=>{
+    const todoId = req.params.todoId;
+    const updatedTodo = req.body;
+    try{
+        const result = await Todo.findByIdAndUpdate(todoId, updatedTodo, {
+            new: true,
+        });
+        res.send({
+            success: true,
+            message: "Todo is updated successfully.",
+            data: result
+        })
+    }catch(error){
+        console.log(error);
+        res.send({
+            success: false,
+            message: "Failed to update Todo."
+        })
+    }
+})
+
 app.listen(port, ()=>{
     console.log(`Todo server is running at ${port}.`);
 })
