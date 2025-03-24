@@ -29,6 +29,24 @@ app.get("/todos", async(req, res)=> {
     }
 })
 
+app.post("/create-todo", async(req, res)=> {
+    const todoBody = req?.body;
+    try{
+        const result = await Todo.create(todoBody);
+        res.send({
+            success: true,
+            message: "Todo is created successfully.",
+            data: result,
+        })
+    }catch(error){
+        console.log(error);
+        res.send({
+            success: false,
+            message: "Failed to create Todo.",
+        })
+    }
+})
+
 app.listen(port, ()=>{
     console.log(`Todo server is running at ${port}.`);
 })
